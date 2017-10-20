@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<report file="dih_reports_test.report_dih_move" id="action_report_custom_journal_entries" model="account.move" name="dih_reports_test.report_dih_move" report_type="qweb-pdf" string="My first report"/>
+		<template id="report_dih_move">
+			<t t-call="report.html_container">
+				<t t-call="report.internal_layout">
+					<div class="page">
+						<t t-set="somesum" t-value="0.0"/>
+						<t t-as="o" t-foreach="docs">
+							<t t-set="somesum" t-value="somesum + o.dummy_credit + o.dummy_debit"/>
+							<div class="oe_structure"/>
+							<t t-esc="somesum"/>
+							<span t-esc="some_value"/>
+							<span t-esc="somefunc()"/>
+						</t>
+					</div>
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>

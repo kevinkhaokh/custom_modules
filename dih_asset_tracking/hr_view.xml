@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding ="utf-8"?>
+<openerp>
+	<data>
+        <record id="view_employee_form_allowances_ext" model="ir.ui.view">
+            <field name="name">hr.employee.form.assets</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='HR Settings']" position="after">
+                    <page string="Assets">
+                        <field name="assets_currently_assigned" readonly="1"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+	</data>
+</openerp>

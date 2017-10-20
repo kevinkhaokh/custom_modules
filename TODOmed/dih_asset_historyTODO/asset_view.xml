@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="view_form_asset_inherited" model="ir.ui.view">
+			<field name="name">Asset - user extension</field>
+			<field name="model">asset.asset</field>
+			<field name="inherit_id" ref="asset.assets_form_view"/>
+			<field name="arch" type="xml">
+				<field name="asset_number" position="after">
+					<field name="dih_description"/>
+				</field>
+			</field>
+		</record>
+	</data>
+</openerp>

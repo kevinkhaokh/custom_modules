@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="assets_backend" name="google_drive assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/dih_document_url_attachments/static/src/js/url.js"></script>
+            </xpath>
+        </template>
+
+        <record model='ir.actions.act_window' id='action_ir_attachment_add_url'>
+            <field name='name'>Add URL</field>
+            <field name='res_model'>ir.attachment.add_url</field>
+            <field name='type'>ir.actions.act_window</field>
+            <field name='target'>new</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>form</field>
+        </record>
+
+        <record model='ir.actions.act_window' id='dih_action_ir_attachment_list_all'>
+            <field name='name'>List all attachments wizard</field>
+            <field name='res_model'>ir.attachment.dummy.list.all</field>
+            <field name='type'>ir.actions.act_window</field>
+            <field name='target'>new</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>form</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ir_attachment_add_url_form">
+            <field name="name">ir.attachment.add_url.form</field>
+            <field name="model">ir.attachment.add_url</field>
+            <field name="arch" type="xml">
+                <form string="Add URL" version="7.0">
+                    <group>
+                        <field name="name"/>
+                        <field name="url" widget="url"/>
+                        <field name="comments"/>
+                    </group>
+                    <footer>
+                        <button name="action_add_url" string="Add" class="oe_highlight" type="object" />
+                        or
+                        <button special="cancel" string="Cancel" class="oe_link" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_attachment_tree">
+            <field name="name">document.view_document_file_tree</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="document.view_document_file_tree"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='name']" position="after">
+                    <field name="category"/>
+               </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_attachment_form">
+            <field name="name">base.view_document_file_form_ext</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="base.view_attachment_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="category" string="File Category"/>
+               </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_attachment_form_ext">
+            <field name="name">base.view_document_file_search_ext</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="base.view_attachment_search"/>
+            <field name="arch" type="xml">
+               <xpath expr="//filter[@string='Creation Month']" position="after">
+                    <filter string="Category" icon="terp-personal" domain="[]" context="{'group_by' : 'category'}"/>
+               </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ir_attachment_list_all_form">
+            <field name="name">ir.attachment.dih_list_all.form</field>
+            <field name="model">ir.attachment.dummy.list.all</field>
+            <field name="arch" type="xml">
+                <form string="Add URL" version="7.0">
+                    <footer>
+                        <button name="action_list_all" string="List all attachments" class="oe_highlight" type="object" />
+                        or
+                        <button special="cancel" string="Cancel" class="oe_link" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

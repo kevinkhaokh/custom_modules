@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding ="utf-8"?>
+<openerp>
+	<data>
+         <record id="asset_tree_std" model="ir.ui.view">
+            <field name="name">asset.asset</field>
+            <field name="model">asset.asset</field>
+            <field name="view_type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="category"/>
+                    <field name="assigned_to"/>
+                    <field name="last_state"/>
+                </tree>
+            </field>
+        </record>
+
+         <record id="asset_form_std" model="ir.ui.view">
+            <field name="name">asset.asset</field>
+            <field name="model">asset.asset</field>
+            <field name="view_type">form</field>
+            <field name="arch" type="xml">
+                <form string="Assets">
+                    <sheet>
+                        <group>
+                            <group string="Basic information">
+                                <field name="name"/>
+                                <field name="ref"/>
+                                <field name="category"/>
+                                <field name="assigned_to"/>
+                            </group>
+                            <group string="Additional information">
+                                <field name="specs"/>
+                                <field name="price"/>
+                                <field name="ref_invoice"/>
+                                <field name="last_state" readonly="1"/>
+                            </group>
+                            <group string="Events">
+                                <field name="historynotes"/>
+                            </group>
+                        </group>
+                        
+                 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+         <record id="asset_historynote_form" model="ir.ui.view">
+            <field name="name">asset.historynote</field>
+            <field name="model">asset.historynote</field>
+            <field name="view_type">form</field>
+            <field name="arch" type="xml">
+                <form string="Asset event">
+                    <sheet>
+                        <group>
+                            <group string="Information">
+                                <field name="name"/>
+                                <field name="date"/>
+                                <group string="Reparation information" attrs="{'invisible':[('name', '!=', 'repair')]}">
+                                    <field name="repair_supplier"/>
+                                    <field name="repair_price"/>
+                                    <field name="repair_ref"/>
+                                </group>
+                                <group string="Damage information" attrs="{'invisible':[('name', '!=', 'damage')]}">
+                                    <field name="damage_text"/>
+                                </group>
+                                <group string="Retiring information" attrs="{'invisible':[('name', '!=', 'retire')]}">
+                                    <field name="retire_text"/>
+                                </group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+         <record id="asset_historynote_tree" model="ir.ui.view">
+            <field name="name">asset.historynote</field>
+            <field name="model">asset.historynote</field>
+            <field name="view_type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="action_asset_open" model="ir.actions.act_window">
+            <field name="name">Open Assets menu</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">asset.asset</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Assets" id="base.menu_asset_root" sequence="80"/>
+
+        <menuitem name="Assets" id="menu_assets_assets" parent="base.menu_asset_root" sequence="9"/>
+
+        <menuitem name="Assets" id="menu_maintenance_assets_management" parent="menu_assets_assets" sequence="100" action="dih_asset_tracking.action_asset_open"/>
+	</data>
+</openerp>

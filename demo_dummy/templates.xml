@@ -1,0 +1,37 @@
+<openerp>
+    <data>
+    	        
+        <menuitem name="Dummy Example" id="demo_dummy.content" />
+        <menuitem name="Demo" id="demo_dummy.content1" parent="demo_dummy.content"/>
+
+		<!--Instructor Calendar-->
+        <record model="ir.ui.view" id="demo_dummy">
+            <field name="name">demo.dummy</field>
+            <field name="model">demo_dummy.content</field>
+            <field name="arch" type="xml">
+                <dummyview>
+                	<templates>
+	                    <t t-name="dummy-content">
+		                	<div class="col-md-12">
+		                		<h2>Lorem ipsum</h2>
+		                		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id lorem fringilla, aliquet orci ac, hendrerit ex. Nullam purus turpis, aliquet nec facilisis at, vehicula non lorem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas tincidunt ex metus, ultricies ullamcorper velit molestie eget. In hac habitasse platea dictumst. Aenean rutrum rhoncus turpis sit amet tincidunt. Mauris commodo justo quis quam ultricies, nec blandit nulla interdum. Sed vulputate lacus erat, in auctor ipsum malesuada at. In vehicula velit enim, quis sollicitudin nunc facilisis non. Praesent a metus hendrerit, rutrum turpis sed, commodo justo. Nulla suscipit risus vel felis consectetur consectetur. Morbi mi nunc, tempor sit amet quam id, posuere molestie metus.</p>
+		                		<p>In accumsan blandit libero. Aliquam pharetra convallis enim, quis pretium lacus scelerisque ut. Nunc et velit nec ligula pretium molestie. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam in leo eget ante egestas condimentum. Donec lobortis, est non commodo consequat, arcu purus posuere erat, id faucibus sapien arcu quis lectus. Quisque commodo ut arcu ultrices posuere. Phasellus interdum justo non tellus egestas sodales. Mauris bibendum sapien a sem maximus rhoncus. Nulla molestie urna sem, sit amet feugiat est sodales ut. Aliquam eu efficitur sapien. Duis libero libero, elementum et sem lacinia, rhoncus elementum erat. Maecenas euismod tortor et fermentum condimentum. Quisque non efficitur justo. </p>
+		                	</div>
+	                	</t>
+                	</templates>
+                </dummyview>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="demo_dummy_cont">
+            <field name="name">Dummy</field>
+            <field name="res_model">demo_dummy.content</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">dummyview</field>
+        </record>
+        
+        <menuitem name="Content" id="demo_dummy.content2" action="demo_dummy_cont" parent="demo_dummy.content1"/>
+        
+    </data>
+
+</openerp>

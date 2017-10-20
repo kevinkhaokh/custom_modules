@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+        <!-- Modify the hr.employee view to add the nocreate/noedit site class o2m and team string ;;;; all that in new notebook-->
+		<record id="view_hr_employee_payroll_info" model="ir.ui.view">
+			<field name="name">hr.employee.worker.payroll.info</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//page[@string='HR Settings']" position="after">
+					<page string="Worker payroll information only" groups="base.group_hr_user">
+                        <group>
+                            <field name="worker_site"/>
+                            <field name="worker_team"/>
+                        </group>
+                    </page>
+				</xpath>
+			</field>
+		</record>
+
+        <!-- write form and list view for worker payroll sites -->
+        <record id="dih_view_worker_site_payroll_tree" model="ir.ui.view">
+            <field name="name">hr.worker.payroll.site.tree</field>
+            <field name="model">hr.worker.site</field>
+            <field name="arch" type="xml">
+                <tree string="Worker site template generation">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- write view for wizard -->
+        <record id="dih_hr_worker_payroll_wizard_view" model="ir.ui.view">
+            <field name="name">dih.worker.payroll.wizard</field>
+            <field name="model">dih.worker.payroll.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Confirm Set To Pay">
+                    <group><field name="date_start" string="Start Date"/></group>
+                    <group><field name="date_end" string="End Date"/></group>
+                    <group><field name="site" string="Site"/></group>
+                    <footer>
+                        <button string="Generate Excel" name="dih_action_worker_payroll_generate" type="object" default_focus="1" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+			
+        <!-- Searchview : filter/group by site ; filter/group by team -->
+
+
+        <!-- Window actions for the menuitems -->
+        <act_window id="action_open_worker_payroll_sites" name="Open Worker Payroll Sites Action" res_model="hr.worker.site" view_mode="form,tree" view_id="dih_view_worker_site_payroll_tree"/>
+
+        <act_window id="action_generate_payroll_template"
+        name="Generate Payroll Template"
+        res_model="dih.worker.payroll.wizard"
+        view_mode="form"
+        target="current" multi="True"
+        view_id="dih_hr_worker_payroll_wizard_view"
+        />
+
+
+        <!-- Menuitems for sites and excel generator wizard -->
+        <menuitem id="dih_payroll_sites_configure" parent="hr.menu_hr_configuration" name="Sites (for worker payroll)" groups="base.group_hr_manager" sequence="45" action="action_open_worker_payroll_sites"/>
+        <menuitem id="dih_menu_payroll_excel_generation" parent="hr.menu_hr_main" name="Generate Payroll Template" sequence="30" action="action_generate_payroll_template"/>
+
+
+	</data>
+</openerp>

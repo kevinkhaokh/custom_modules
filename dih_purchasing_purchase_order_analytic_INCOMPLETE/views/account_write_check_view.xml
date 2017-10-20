@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_write_check_tree" model="ir.ui.view">
+            <field name="name">account.write.check.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'" string="Invoice">
+                    <field name="partner_id" groups="base.group_user"/>
+                    <field name="commercial_partner_id" invisible="1"/>
+                    <field name="date_invoice"/>
+                    <field name="number"/>
+                    <field name="reference" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="period_id" invisible="1" groups="account.group_account_user"/>
+                    <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                    <field name="user_id" string="Responsible"/>
+                    <field name="date_due"/>
+                    <field name="origin"/>
+                    <field name="currency_id" groups="base.group_multi_currency"/>
+                    <field name="residual" sum="Residual Amount"/>
+                    <field name="amount_untaxed" sum="Untaxed Amount"/>
+                    <field name="amount_total" sum="Total Amount"/>
+                    <field name="state"/>
+                    <field name="type" invisible="context.get('type',True)"/>
+                </tree>
+            </field>
+        </record>
+		
+		
+
+		<!-- Action to open window -->
+		<act_window id="dih_action_write_check" name="Write Check Menu Action" res_model="account.invoice" view_mode="tree,form" view_id="view_account_write_check_tree" domain="[('state', '=', 'to_pay')]"/>
+		<!--   -->
+
+		<!-- Menuitem to open window -->
+		<menuitem id="menu _write_check" name="Write Check" parent="account.menu_finance_payables" sequence="21" action="dih_action_write_check"/>
+
+    </data>
+</openerp>

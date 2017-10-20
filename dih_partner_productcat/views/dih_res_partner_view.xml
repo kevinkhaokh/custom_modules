@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+		<record id="dih_view_partner_form" model="ir.ui.view">
+			<field name="name">Partner form with product categories</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='title']" position="after">
+					<field name="product_cats" attrs="{'invisible':[('supplier', '=', False)]}" widget="selection" options="{'no_create_edit': True}" />
+				</xpath>
+			</field>
+		</record>	
+
+		<record id="dih_view_partner_search" model="ir.ui.view">
+			<field name="name">Partner search with product categories</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_res_partner_filter"/>
+			<field name="arch" type="xml">
+				<xpath expr="//filter[@string='Country']" position="after">
+                    <filter string="Product Categories" context="{'group_by': 'product_cats'}"/>
+				</xpath>
+				<xpath expr="//filter[@string='Persons']" position="before">
+                    <field name="product_cats"/>
+				</xpath>
+			</field>
+		</record>	
+
+
+	</data>
+</openerp>

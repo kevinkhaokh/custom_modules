@@ -1,0 +1,144 @@
+<openerp>
+    <data>
+        <record id="vlim_edit_project" model="ir.ui.view">
+            <field name="name">project.project.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="approval_delay"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="vlim_view_approval_list_search_form" model="ir.ui.view">
+            <field name="name">project.task.search.form</field>
+            <field name="model">project.task</field>
+            <field name="arch" type="xml">
+               <search string="Tasks">
+                    <field name="name" string="Tasks"/>
+                    <field name="categ_ids"/>
+                    <field name="partner_id"/>
+                    <field name="project_id"/>
+                    <field name="reviewer_id"/>
+                    <field name="user_id"/>
+                    <field name="date_submittal"/>
+                    <field name="date_return"/>
+                    <field name="last_day_returning"/>
+                    <field name="time_left_late"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="used_for"/>
+                    <field name="location"/>
+                    <field name="stage_id"/>
+                    <filter string="My Tasks" domain="[('user_id','=',uid)]"/>
+                    <filter string="Unassigned" name="unassigned" domain="[('user_id', '=', False)]"/>
+                    <separator/>
+                    <filter string="New" name="draft" domain="[('stage_id.sequence', '&lt;=', 1)]"/>
+                    <separator/>
+                    <filter string="New Mail" name="message_unread" domain="[('message_unread','=',True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Project" name="project" context="{'group_by':'project_id'}"/>
+                        <filter string="Task" context="{'group_by':'name'}"/>
+                        <filter string="Assigned to" name="User" context="{'group_by':'user_id'}"/>
+                        <filter string="Stage" name="Stage" context="{'group_by':'stage_id'}"/>
+                        <filter string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                        <separator/>
+                        <filter string="Last Message" name="group_message_last_post" context="{'group_by':'message_last_post:week'}"/>
+                        <filter string="Assignation Month" context="{'group_by':'date_start:month'}" help="Creation Date"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="vlim_view_approval_list_tree" model="ir.ui.view">
+            <field name="name">project.task.tree</field>
+            <field name="model">project.task</field>
+            <field eval="2" name="priority"/>
+            <field name="arch" type="xml">
+                <tree fonts="bold:message_unread==True" colors="red:stage_name=='Rejected';orange:stage_name=='Resubmit';#dada00:stage_name=='Approved with comments';green:stage_name=='Approved'" string="Tasks">
+                    <field name="message_unread" invisible="1"/>
+                    <field name="stage_name" invisible="1"/>
+                    <field name="name" string="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="used_for" string="Used For"/>
+                    <field name="location"/>
+                    <field name="project_id" invisible="context.get('user_invisible', False)"/>
+                    <field name="stage_id" invisible="context.get('set_visible',False)"/>
+                    <field name="date_submittal" string="Submittal" groups="base.group_no_one"/>
+                    <field name="date_return" string="Return" groups="base.group_no_one"/>
+                    <field name="last_day_returning" string="Last Day"/>
+                    <field name="time_left_late" string="Time" class="red"/>
+                    <field name="remarks"/>
+                    <field name="date_deadline" invisible="context.get('deadline_visible',True)"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="vlim_action_view_approval_list" model="ir.actions.act_window">
+            <field name="name">Approval List</field>
+            <field name="res_model">project.task</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="vlim_view_approval_list_tree" />
+            <field name="search_view_id" ref="vlim_view_approval_list_search_form"/>
+            <field name="help" type="html">
+                <p>
+                    Odoo's project management allows you to manage the pipeline
+                    of tasks in order to get things done efficiently. You can
+                    track progress, discuss on tasks, attach documents, etc.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="vlim_action_view_approval_list" id="vlim_menu_action_view_approval_list" parent="project.menu_project_management" sequence="6"/>
+
+        <record id="vlim_view_task_form2" model="ir.ui.view">
+            <field name="name">project.task.form</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <field name="date_deadline" position="after">
+                    <field name="date_submittal"/>
+                    <field name="date_return"/>
+                    <field name="last_day_returning"/>
+                    <field name="time_left_late"/>
+                </field>
+
+                <field name="reviewer_id" position="after">
+                    <field name="supplier_id"/>
+                </field>
+
+                <xpath expr="//field[@name='description']/parent::page" position="attributes">
+                    <attribute name="string">Approval</attribute>
+                </xpath>
+
+                <field name="description" position="before">
+                    <separator string="Description"/>
+                </field>
+
+                <field name="description" position="after">
+                    <group>
+                        <group>
+                            <label for="code"/>
+                            <div>
+                                <field name="code"/>
+                            </div>
+                            <label for="used_for"/>
+                            <div>
+                                <field name="used_for"/>
+                            </div>
+                            <label for="location"/>
+                            <div>
+                                <field name="location"/>
+                            </div>
+                        </group>
+                        <group invisible="1" />
+                    </group>
+                    <separator string="Remarks"/>
+                    <field name="remarks" nolabel="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

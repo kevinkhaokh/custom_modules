@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<template id="template" xml:space="preserve">
+    <t t-name="ManualReconcileButton">
+            <button class="oe_button oe_new_button oe_highlight dih_reconcile_button" type="button">Reconcile Permanently</button>
+    </t>
+    <t t-name="TempManualReconcileButton">
+            <button class="oe_button oe_new_button oe_highlight dih_temp_reconcile_button" type="button">Print Intermediate report</button>
+    </t>
+    <t t-name="ReconcileHeaderValues">
+            <div class="dih_reconcile_header_values"></div>
+    </t>
+
+
+    <t t-name="PNLView">
+        <div class="oe_pnlview_view">
+            <div class="oe_pnlview_buttons"/>
+            <table class="oe_pnlview_content">
+                <tr t-foreach="records"  class="oe_pnlview_groups_headers">
+                    <td class="oe_pnlview_dummy_cell">
+                        <div/>
+                    </td>
+                </tr>
+                <tr class="oe_pnlview_content-cont">
+                    <td>
+                        <div class="oe_pnlview_content"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </t>
+    <div class="oe_pnlview_buttons" t-name="PNLView.buttons">
+        <t t-if="widget.options.action_buttons !== false">
+            <button class="oe_pnlview_button_new oe_highlight" type="button">
+                <t t-esc="widget.options.create_text || _t('Action 1')"/>
+            </button>
+            <button class="oe_pnlview_button oe_highlight" type="button">
+                <t t-esc="widget.options.action2_text || _t('Action 2')"/>
+            </button>
+            <span class="oe_fade">or</span>
+            <div class="oe_bounce_container">
+                <a class="oe_bold oe_pnlview_add_column" href="#">Action 3</a>
+            </div>
+        </t>
+    </div>
+</template>

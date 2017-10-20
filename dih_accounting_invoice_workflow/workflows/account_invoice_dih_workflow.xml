@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+		<record id="act_to_pay" model="workflow.activity">
+			<field name="wkf_id" ref="account.wkf"/>
+			<field name="name">to_pay</field>
+			<field name="action">write({'state':'to_pay'})</field>
+			<field name="kind">function</field>
+		</record>
+
+
+		<record id="open_to_to_pay" model="workflow.transition">
+			<field name="act_from" ref="account.act_open"/>
+			<field name="act_to" ref="act_to_pay"/>
+			<field name="signal">invoice_dih_open_to_to_pay</field>
+		</record>
+
+		<record id="to_pay_to_paid" model="workflow.transition">
+			<field name="act_from" ref="act_to_pay"/>
+			<field name="act_to" ref="account.act_paid"/>
+			<field name="trigger_model"/>
+			<field name="trigger_expr_id"/>
+			<field name="condition">reconciled</field>
+		</record>
+
+		<record id="to_pay_to_cancel" model="workflow.transition">
+			<field name="act_from" ref="act_to_pay"/>
+			<field name="act_to" ref="account.act_cancel"/>
+			<field name="signal">invoice_cancel</field>
+		</record>
+
+	<!--<xpath expr="/record[@id='t8']" position="replace"></xpath>-->
+</data>
+</openerp>

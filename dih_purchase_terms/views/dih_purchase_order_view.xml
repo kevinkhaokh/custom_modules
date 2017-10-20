@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+		<record id="dih_purchase_order_form" model="ir.ui.view">
+			<field name="name">Purchase Order view - customized</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='notes']" position="replace">
+				</xpath>
+				<xpath expr="//field[@name='incoterm_id']" position="replace">
+				</xpath>
+				<xpath expr="//field[@name='payment_term_id']" position="replace">
+				</xpath>
+				<xpath expr="//field[@name='shipped']" position="after">
+					<field name="notes"/>
+					<field name="incoterm_id"/>
+				</xpath>
+			</field>
+		</record>	
+	</data>
+</openerp>

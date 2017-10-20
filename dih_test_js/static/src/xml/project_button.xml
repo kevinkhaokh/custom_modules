@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<template id="template" xml:space="preserve">       
+          <t t-extend="ListView.buttons">                   
+                 <t t-jquery="button.oe_list_add" t-operation="after">                           
+                          <button t-if="widget.view_id == 1196"  class="oe_button oe_new_button oe_highlight" type="button">Reconcile Permanently</button>
+                </t>       
+          </t>   
+</template>
+
+<!--
+<templates>
+  <t t-name='ButtonWidget'>
+    <div class='button'>
+       <t t-esc='widget.label' />
+    </div>
+  </t>
+</templates> -->

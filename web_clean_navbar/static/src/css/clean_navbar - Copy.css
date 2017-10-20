@@ -1,0 +1,122 @@
+/*Top menu general*/
+.navbar-inverse .navbar-nav > li > a {
+	color:white; /* ?? green */
+	background-color:#375ABE;
+}
+
+ul.navbar-left li > a:hover, ul.navbar-right li > a:hover {
+  color:#375ABE!important; /* ?? green */
+  background-color:#121E3F!important; /* ?? #F00 */
+  	-webkit-transition: color 0.2s, background-color 0.2s;
+}
+
+ul.navbar-left li.active {
+  background-color:#fff!important;
+}
+
+/*Top menu when active*/
+ul.navbar-left li.active > a, ul.navbar-right li.active > a {
+  
+  background-color:white!important;
+  color:#375ABE!important;
+   /*background: -moz-linear-gradient(top, rgba(55,90,190,1) 0%, rgba(55, 90, 190,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(55,90,190,1)), color-stop(100%, rgba(55, 90, 190,1)));
+    /* background: -webkit-linear-gradient(top, rgba(55,90,190,1) 0%, rgba(55, 90, 190,1) 100%); 
+    background: -o-linear-gradient(top, rgba(55,90,190,1) 0%, rgba(55, 90, 190,1) 100%);
+    background: -ms-linear-gradient(top, rgba(55,90,190,1) 0%, rgba(55, 90, 190,1) 100%);
+    /* background: linear-gradient(to bottom, rgba(55,90,190,1) 0%, rgba(55, 90, 190,1) 100%); */
+    background:unset;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#777777', endColorstr='#444444', GradientType=0 );
+  	-webkit-transition: color 0.2s;
+  	-webkit-transition: background 0.2s;
+  	-webkit-transition: background-color 0.2s;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:hover {
+  	color:#375ABE!important;
+  	-webkit-transition: color 0.2s, background-color 0.2s;
+}
+
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+  	color:#375ABE;
+}
+
+#oe_main_menu_navbar{
+	min-height:28px!important;
+}
+
+.navbar-inverse{
+	background-color:#375ABE;
+	border-color:#375ABE;
+}
+
+.openerp .nav-pills > li.active > a, .openerp a.list-group-item.active > a {
+	background-color:white;
+	font-weight:bold;
+	color:#375ABE!important;
+}
+
+.openerp .oe_secondary_menu_section{
+	color:#375ABE;
+}
+
+.openerp .oe_leftbar{
+	background-color:white;
+}
+#oe_main_menu_navbar li a, #oe_main_menu_navbar li button{
+	margin-top:0px;
+}
+
+.oe_secondary_submenu > li:hover{
+	border-left: 6px solid #375ABE;
+	-webkit-transition: border-left 0.1s, background-color 0.1s;
+	background-color:#D0D9F1;
+}
+
+
+.oe_secondary_submenu > li.active a:hover{
+	border-left: 6px solid #375ABE;
+	-webkit-transition: border-left 0.1s;
+	background-color:#D0D9F1;
+}
+
+.openerp .oe_view_manager_current > .oe_view_manager_header{
+	background-image: unset;
+	background-color: #fff!important;
+}
+
+/*Red buttons emphasized in form views*/
+.openerp button.oe_highlight{
+	background-image: unset;
+	background-color: #375ABE;
+	box-shadow: 2px 2px 2px grey;
+}
+
+.openerp button.oe_highlight:hover{
+	background-image: unset;
+	background-color: #375ABE;
+	box-shadow: 3px 3px 3px grey;
+}
+
+.openerp button.oe_highlight:focus{
+	border:unset;
+}
+
+/*Regular buttons like in form view*/
+.openerp .oe_button, .openerp button{
+	background-image: unset;
+	background-color: #fff;
+	box-shadow: 2px 2px 2px grey;
+}
+
+.openerp button:hover, .openerp .oe_button:hover{
+	background-image:unset;
+	box-shadow: 3px 3px 3px grey;
+}
+
+.openerp button:focus, .openerp .oe_button:focus{
+	border:unset;
+}
+
+56699F

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+
+        <!-- Action to open window -->
+        <act_window id="action_offier_entry" name="Officer Entry Action" res_model="account.move" view_mode="tree,form" view_id="account.view_move_tree" domain="[('write_uid', '=', uid)]"/>
+       
+
+
+        <!-- Menuitem to open window -->
+        <menuitem id="menu _officer_entry" name="Officer Entry" parent="account.menu_finance_entries" sequence="21" action="action_offier_entry"/>
+
+
+
+
+    </data>
+</openerp>

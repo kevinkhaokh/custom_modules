@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+		<record id="project.dashboard_form" model="ir.ui.view">
+			<field name="name">Project</field>
+			<field name="model">project.dashboard</field>
+			<field name="arch" type="xml">
+				<form string="Project Information Dashboard" create="false">
+					<sheet>
+						<div class="oe_title oe_left">
+							<h1>
+								<field name="name" string="Project Name"/>
+							</h1>
+						</div>
+						<div class="oe_right oe_button_box">
+							<button class="oe_inline oe_stat_button" type="object" name="smart_button_attachments" icon="fa-folder-o">
+								<field string="Attachments" name="count_attachments" widget="statinfo"/>
+							</button>
+							<button class="oe_inline oe_stat_button" type="object" name="smart_button_purchases" icon="fa-strikethrough">
+								<field string="Orders" name="count_purchases" widget="statinfo"/>
+							</button>
+							<button class="oe_inline oe_stat_button" type="object" name="smart_button_invoices" icon="fa-dollar">
+								<field string="Paid" name="count_invoices" widget="statinfo"/>
+							</button>
+							<button class="oe_inline oe_stat_button" type="object" name="smart_button_ipcs" icon="fa-dollar">
+								<field string="IPCs" name="count_ipcs" widget="statinfo"/>
+							</button>
+						</div>
+						<group col="4">
+							<field name="location"/>
+							<field name="project_type"/>
+							<field name="advancement"/>
+							<field name="customer"/>
+							<field name="owner"/>
+							<field name="organizer"/>
+							<field name="architect"/>
+							<field name="parent_lead" string="Created from Opportunity"/>
+							<field name="date_start"/>
+							<field name="date_end"/>
+						</group>
+						<notebook>
+							<page string="Financial">
+								<group style="width: 40%">
+								<field name="amt_work_tbc"/>
+								<field name="budget"/>
+								<field name="analytic_account"/>
+							</group>
+							</page>
+							<page string="Team">
+								<field name="employees_included"/>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="project.dashboard_tree" model="ir.ui.view">
+			<field name="name">Project</field>
+			<field name="model">project.dashboard</field>
+			<field name="arch" type="xml">
+				<tree string="Project Information Dashboard" create="false">
+					<field name="name"/>
+					<field name="budget"/>
+					<field name="advancement"/>
+					<field name="date_start"/>
+					<field name="date_end"/>
+				</tree>
+			</field>
+		</record>
+			
+		<record model="ir.ui.menu" id="project.menu_projects">
+			<field name="name">Project - APPROVALS</field>
+			<field name="sequence">2</field>
+		</record>
+
+         <record id="action_project_dashboards" model="ir.actions.act_window">
+            <field name="name">Project Dashboards</field>
+            <field name="res_model">project.dashboard</field>
+            <field name="view_type">form</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">tree,form</field>
+ <!--           <field name="search_view_id" ref="view_project_project_filter"/> -->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                  Click to start a new project.
+                </p><p>
+                  This menu is specifically for the project dashboards containing all the information on a project.
+                </p><p>
+                  Project dashboards are normally created on Opportunity conversion.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Project - DASHBOARDS"
+            id="menu_project_dashboards"
+            parent="project.menu_project_management"
+            sequence="1"
+            action="action_project_dashboards"/>
+
+	</data>
+</openerp>

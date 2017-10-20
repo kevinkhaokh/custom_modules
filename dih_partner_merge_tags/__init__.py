@@ -1,0 +1,1 @@
+from . import dih_res_partner_category

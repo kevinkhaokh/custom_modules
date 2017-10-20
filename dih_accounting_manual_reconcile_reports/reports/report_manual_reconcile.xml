@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<report file="dih_accounting_manual_reconcile_reports.report_dih_manual_reconcile" id="action_report_manual_reconcile" model="account.move" name="dih_accounting_manual_reconcile_reports.report_dih_manual_reconcile" report_type="qweb-pdf" string="Reconcile Report"/>
+		<template id="report_dih_manual_reconcile">
+			<t t-call="report.html_container">
+				<t t-call="report.internal_layout">
+					<div class="page">
+						<h1 align="center">Reconciliation report</h1><h2 align="center"><t t-esc="get_start_date()"/> to <t t-esc="get_end_date()"/></h2>
+						<div class="row">
+						<div class="col-xs-5">
+						<table class="table">
+						<tr>
+							<td><strong>Bank balance at <t t-esc="get_start_date()"/> : </strong></td>
+							<td>
+								<t t-esc="get_beginning_balance()"/>
+							</td>
+						</tr>
+						<tr>
+							<td>Cleared payments : </td>
+							<td><t t-esc="get_cleared_payments()"/></td>
+						</tr>
+						<tr>
+							<td>Cleared deposits : </td>
+							<td><t t-esc="get_cleared_deposit()"/></td>
+						</tr>
+						<tr>
+							<td>Cleared total : </td>
+							<td><t t-esc="get_total_cleared()"/></td>
+						</tr>
+						<tr>
+							<td><strong>Cleared balance : </strong></td>
+							<td><t t-esc="get_cleared_balance()"/></td>
+						</tr>
+						<tr>
+							<td><strong>Bank balance at <t t-esc="get_end_date()"/> : </strong></td>
+							<td><t t-esc="get_end_balance()"/></td>
+						</tr>
+						</table>
+						</div>
+						</div>
+						<br/>
+						<br/>
+						<div class="row">
+						<div class="col-xs-5">
+						<table class="table table-condensed">
+						<tr>
+							<td>Uncleared payments : </td>
+							<td><t t-esc="get_uncleared_payments()"/></td>
+						</tr>
+						<tr>
+							<td>Uncleared deposits : </td>
+							<td><t t-esc="get_uncleared_deposit()"/></td>
+						</tr>
+						<tr>
+							<td><strong>Uncleared total : </strong></td>
+							<td><t t-esc="get_uncleared_total()"/></td>
+						</tr>
+						</table>
+						</div>
+						</div>
+						<br/>
+						<br/>
+						<div class="row">
+						<div class="col-xs-5">
+						<table class="table">
+						<tr>
+							<td><strong>Account balance at <t t-esc="get_start_date()"/> :  </strong></td>
+							<td><t t-esc="get_register_balance_prev()"/></td>
+						</tr>
+						<tr>
+							<td>New transactions payments : </td>
+							<td><t t-esc="get_new_payments()"/></td>
+						</tr>
+						<tr>
+							<td>New transactions deposits : </td>
+							<td><t t-esc="get_new_deposits()"/></td>
+						</tr>
+						<tr>
+							<td><strong>New transactions total : </strong></td>
+							<td><t t-esc="get_new_total()"/></td>
+						</tr>
+						<tr>
+							<td><strong>Account balance at <t t-esc="get_end_date()"/> : </strong></td>
+							<td><t t-esc="get_register_balance_curr()"/></td>
+						</tr>
+						</table>
+						</div>
+						</div>
+						<br/>
+						<h2>Reconciled between <t t-esc="get_start_date()"/> to <t t-esc="get_end_date()"/> - credits</h2>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										Name
+									</th>
+									<th>
+										Date
+									</th>
+									<th>
+										Reference
+									</th>
+									<th>
+										Amount
+									</th>
+									<th>
+										Balance
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+							<t t-set="running_sum_credits" t-value="0.0"/>
+							<t t-as="o" t-foreach="docs.sorted(key=lambda x : x.date)">
+								<tr t-if="o.is_manual_reconciled_permanent == True and o.is_credit_or_debit == 'credit'">
+								<t t-set="running_sum_credits" t-value="running_sum_credits + o.dummy_rec_report"/>
+									<td><t t-esc="o.dummy_name"/></td>
+									<td><t t-esc="o.date"/></td>
+									<td><t t-esc="o.ref"/></td>
+									<td><t t-esc="o.dummy_rec_report"/></td>
+									<td><t t-esc="running_sum_credits"/></td>
+								</tr>
+
+							<!--<t t-set="somesum" t-value="somesum + o.dummy_credit + o.dummy_debit"/>-->
+							</t>
+							<tr>
+							<td>
+								Total
+							</td>
+							<td/><td/>
+							<td>
+								<t t-esc="get_cleared_payments()"/>
+							</td>
+							<td>
+								<t t-esc="running_sum_credits"/>
+							</td>
+							</tr>
+							</tbody>
+						</table>
+						<br/>
+						<h2>Reconciled between <t t-esc="get_start_date()"/> to <t t-esc="get_end_date()"/> - debits</h2>
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>
+										Name
+									</th>
+									<th>
+										Date
+									</th>
+									<th>
+										Reference
+									</th>
+									<th>
+										Amount
+									</th>
+									<th>
+										Balance
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+							<t t-set="running_sum_debits" t-value="0.0"/>
+							<t t-as="o" t-foreach="docs.sorted(key=lambda x : x.date)">
+								<tr t-if="o.is_manual_reconciled_permanent == True and o.is_credit_or_debit == 'debit'">
+								<t t-set="running_sum_debits" t-value="running_sum_debits + o.dummy_rec_report"/>
+									<td><t t-esc="o.dummy_name"/></td>
+									<td><t t-esc="o.date"/></td>
+									<td><t t-esc="o.ref"/></td>
+									<td><t t-esc="o.dummy_rec_report"/></td>
+									<td><t t-esc="running_sum_debits"/></td>
+								</tr>
+
+							<!--<t t-set="somesum" t-value="somesum + o.dummy_credit + o.dummy_debit"/>-->
+							</t>
+							<tr>
+							<td>
+								Total
+							</td>
+							<td/><td/>
+							<td>
+								<t t-esc="get_cleared_deposit()"/>
+							</td>
+							<td>
+								<t t-esc="running_sum_debits"/>
+							</td>
+							</tr>
+							</tbody>
+						</table>
+						<br/>
+						<h2>Not reconciled ever</h2>
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>
+										Name
+									</th>
+									<th>
+										Date
+									</th>
+									<th>
+										Reference
+									</th>
+									<th>
+										Amount
+									</th>
+									<th>
+										Balance
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+							<t t-set="running_sum_unreconciled" t-value="0.0"/>
+							<t t-as="o" t-foreach="docs.sorted(key=lambda x : x.date)">
+								<tr t-if="o.is_manual_reconciled_permanent == False">
+								<t t-set="running_sum_unreconciled" t-value="running_sum_unreconciled + o.dummy_rec_report"/>
+									<td><t t-esc="o.dummy_name"/></td>
+									<td><t t-esc="o.date"/></td>
+									<td><t t-esc="o.ref"/></td>
+									<td><t t-esc="o.dummy_rec_report"/></td>
+									<td><t t-esc="running_sum_unreconciled"/></td>
+								</tr>
+
+							<!--<t t-set="somesum" t-value="somesum + o.dummy_credit + o.dummy_debit"/>-->
+							</t>
+							<tr>
+							<td>
+								Total
+							</td>
+							<td/><td/>
+							<td>
+								<t t-esc="get_uncleared_total()"/>
+							</td>
+							<td>
+								<t t-esc="running_sum_unreconciled"/>
+							</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</t>
+			</t>
+		</template>
+
+		<report file="dih_accounting_manual_reconcile_reports.report_dih_temp_reconcile" id="action_report_temp_reconcile" model="account.move" name="dih_accounting_manual_reconcile_reports.report_dih_temp_reconcile" report_type="qweb-pdf" string="Reconcile Report"/>
+		<template id="report_dih_temp_reconcile">
+			<t t-call="report.html_container">
+				<t t-call="report.internal_layout">
+					<div class="page">
+						<h1 align="center">Temporary reconciliation report</h1><h2 align="center"><t t-esc="get_start_date()"/> to <t t-esc="get_current_date()"/></h2>
+						<div class="row">
+						<div class="col-xs-5">
+						<table class="table">
+						<tr>
+							<td><strong>Bank balance at <t t-esc="get_start_date()"/> : </strong></td>
+							<td>
+								<t t-esc="get_beginning_balance()"/>
+							</td>
+						</tr>
+						<tr>
+							<td>Cleared payments : </td>
+							<td><t t-esc="get_cleared_payments_temp()"/></td>
+						</tr>
+						<tr>
+							<td>Cleared deposits : </td>
+							<td><t t-esc="get_cleared_deposit_temp()"/></td>
+						</tr>
+						<tr>
+							<td>Cleared total : </td>
+							<td><t t-esc="get_total_cleared_temp()"/></td>
+						</tr>
+						<tr>
+							<td><strong>Cleared balance : </strong></td>
+							<td><t t-esc="get_cleared_balance_temp()"/></td>
+						</tr>
+						<tr>
+							<td><strong>Bank balance at <t t-esc="get_current_date()"/> : </strong></td>
+							<td><t t-esc="get_end_balance()"/></td>
+						</tr>
+						</table>
+						</div>
+						</div>
+						<br/>
+						<br/>
+						<div class="row">
+						<div class="col-xs-5">
+						<table class="table table-condensed">
+						<tr>
+							<td>Uncleared payments : </td>
+							<td><t t-esc="get_uncleared_payments_temp()"/></td>
+						</tr>
+						<tr>
+							<td>Uncleared deposits : </td>
+							<td><t t-esc="get_uncleared_deposit_temp()"/></td>
+						</tr>
+						<tr>
+							<td><strong>Uncleared total : </strong></td>
+							<td><t t-esc="get_uncleared_total_temp()"/></td>
+						</tr>
+						</table>
+						</div>
+						</div>
+						<br/>
+						<br/>
+						<div class="row">
+						<div class="col-xs-5">
+						<table class="table">
+						<tr>
+							<td><strong>Account balance at <t t-esc="get_start_date()"/> :  </strong></td>
+							<td><t t-esc="get_register_balance_prev()"/></td>
+						</tr>
+						<tr>
+							<td>New transactions payments : </td>
+							<td><t t-esc="get_new_payments()"/></td>
+						</tr>
+						<tr>
+							<td>New transactions deposits : </td>
+							<td><t t-esc="get_new_deposits()"/></td>
+						</tr>
+						<tr>
+							<td><strong>New transactions total : </strong></td>
+							<td><t t-esc="get_new_total()"/></td>
+						</tr>
+						<tr>
+							<td><strong>Account balance at <t t-esc="get_current_date()"/> : </strong></td>
+							<td><t t-esc="get_register_balance_curr()"/></td>
+						</tr>
+						</table>
+						</div>
+						</div>
+						<br/>
+						<h2>Reconciled between <t t-esc="get_start_date()"/> to <t t-esc="get_current_date()"/> - credits</h2>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										Name
+									</th>
+									<th>
+										Date
+									</th>
+									<th>
+										Reference
+									</th>
+									<th>
+										Amount
+									</th>
+									<th>
+										Balance
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+							<t t-set="running_sum_credits" t-value="0.0"/>
+							<t t-as="o" t-foreach="docs.sorted(key=lambda x : x.date)">
+								<tr t-if="o.is_manual_reconciled_virtual == True and o.is_credit_or_debit == 'credit'">
+								<t t-set="running_sum_credits" t-value="running_sum_credits + o.dummy_rec_report"/>
+									<td><t t-esc="o.dummy_name"/></td>
+									<td><t t-esc="o.date"/></td>
+									<td><t t-esc="o.ref"/></td>
+									<td><t t-esc="o.dummy_rec_report"/></td>
+									<td><t t-esc="running_sum_credits"/></td>
+								</tr>
+
+							<!--<t t-set="somesum" t-value="somesum + o.dummy_credit + o.dummy_debit"/>-->
+							</t>
+							<tr>
+							<td>
+								Total
+							</td>
+							<td/><td/>
+							<td>
+								<t t-esc="get_cleared_payments()"/>
+							</td>
+							<td>
+								<t t-esc="running_sum_credits"/>
+							</td>
+							</tr>
+							</tbody>
+						</table>
+						<br/>
+						<h2>Reconciled between <t t-esc="get_start_date()"/> to <t t-esc="get_current_date()"/> - debits</h2>
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>
+										Name
+									</th>
+									<th>
+										Date
+									</th>
+									<th>
+										Reference
+									</th>
+									<th>
+										Amount
+									</th>
+									<th>
+										Balance
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+							<t t-set="running_sum_debits" t-value="0.0"/>
+							<t t-as="o" t-foreach="docs.sorted(key=lambda x : x.date)">
+								<tr t-if="o.is_manual_reconciled_virtual == True and o.is_credit_or_debit == 'debit'">
+								<t t-set="running_sum_debits" t-value="running_sum_debits + o.dummy_rec_report"/>
+									<td><t t-esc="o.dummy_name"/></td>
+									<td><t t-esc="o.date"/></td>
+									<td><t t-esc="o.ref"/></td>
+									<td><t t-esc="o.dummy_rec_report"/></td>
+									<td><t t-esc="running_sum_debits"/></td>
+								</tr>
+
+							<!--<t t-set="somesum" t-value="somesum + o.dummy_credit + o.dummy_debit"/>-->
+							</t>
+							<tr>
+							<td>
+								Total
+							</td>
+							<td/><td/>
+							<td>
+								<t t-esc="get_cleared_deposit()"/>
+							</td>
+							<td>
+								<t t-esc="running_sum_debits"/>
+							</td>
+							</tr>
+							</tbody>
+						</table>
+						<br/>
+						<h2>Not reconciled ever</h2>
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>
+										Name
+									</th>
+									<th>
+										Date
+									</th>
+									<th>
+										Reference
+									</th>
+									<th>
+										Amount
+									</th>
+									<th>
+										Balance
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+							<t t-set="running_sum_unreconciled" t-value="0.0"/>
+							<t t-as="o" t-foreach="docs.sorted(key=lambda x : x.date)">
+								<tr t-if="o.is_manual_reconciled_virtual == False">
+								<t t-set="running_sum_unreconciled" t-value="running_sum_unreconciled + o.dummy_rec_report"/>
+									<td><t t-esc="o.dummy_name"/></td>
+									<td><t t-esc="o.date"/></td>
+									<td><t t-esc="o.ref"/></td>
+									<td><t t-esc="o.dummy_rec_report"/></td>
+									<td><t t-esc="running_sum_unreconciled"/></td>
+								</tr>
+
+							<!--<t t-set="somesum" t-value="somesum + o.dummy_credit + o.dummy_debit"/>-->
+							</t>
+							<tr>
+							<td>
+								Total
+							</td>
+							<td/><td/>
+							<td>
+								<t t-esc="get_uncleared_total()"/>
+							</td>
+							<td>
+								<t t-esc="running_sum_unreconciled"/>
+							</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>

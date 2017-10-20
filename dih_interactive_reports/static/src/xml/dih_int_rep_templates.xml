@@ -1,0 +1,33 @@
+<template>
+    <t t-name="BalanceSheet">
+        <div class="oe_dummyview_view">
+            <div class="oe_dummyview_buttons"/>
+            <table class="oe_dummyview_groups">
+                <tr class="oe_dummyview_groups_headers">
+                    <td class="oe_dummyview_dummy_cell">
+                        <div/>
+                    </td>
+                </tr>
+                <tr class="oe_dummyview_content-cont">
+                    <td>
+                        <div class="oe_dummyview_content"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </t>
+    <div class="oe_dummyview_buttons" t-name="BalanceSheet.buttons">
+        <t t-if="widget.options.action_buttons !== false">
+            <button class="oe_dummyview_button_new oe_highlight" type="button">
+                <t t-esc="widget.options.create_text || _t('Action 1')"/>
+            </button>
+            <button class="oe_dummyview_button oe_highlight" type="button">
+                <t t-esc="widget.options.action2_text || _t('Action 2')"/>
+            </button>
+            <span class="oe_fade">or</span>
+            <div class="oe_bounce_container">
+                <a class="oe_bold oe_dummyview_add_column" href="#">Action 3</a>
+            </div>
+        </t>
+    </div>
+</template>

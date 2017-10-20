@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+		<record id="dih_purchase_order_form_analytic" model="ir.ui.view">
+			<field name="name">Purchase Order view - customized</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='partner_ref']" position="after">
+					<field name="analytic_account" string="Project analytic account" options="{'no_create': True}"/>
+					<field name="product_categories" string="Categories of products" widget="many2many_tags"/>
+					<field name="leaf_product_categories" string="Types of products" widget="many2many_tags"/>
+
+				</xpath>
+				<xpath expr="//field[@name='product_id']" position="replace">
+					<field name="product_cat" string="Category" domain="[('type', '=', 'normal')]"/>
+                    <field name="product_id" on_change="onchange_product_id(parent.pricelist_id,product_id,0,False,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,False,False,parent.state,context)"  domain="[('categ_id', 'child_of', product_cat), ('purchase_ok', '=', True)]"/>
+				</xpath>
+				<xpath expr="//field[@name='picking_type_id']" position="after">
+                    <field name="internal_po_number" readonly='1' class="oe_inline"/>
+				</xpath>
+				<xpath expr="//field[@name='date_order']" position="replace">
+                    <field name="rfq_date" class="oe_inline"/>
+                    <field name="expected_delivery_date" class="oe_inline"/>
+                    <field name="date_order" class="oe_inline"/>
+				</xpath>
+				<xpath expr="//field[@name='date_planned']" position="replace">
+					<field name="date_planned" string="Delivery date (will be recalculated)"/>
+				</xpath>
+				<xpath expr="//field[@name='notes']" position="replace">
+				</xpath>
+				<xpath expr="//page[@string='Deliveries &amp; Invoices']" position="after">
+					<page string="Terms and Conditions">
+						<group colspan="3">
+							<h2>Contract Type</h2><br/>
+							<field name="tnc_contract_type"/>
+							<field name="tnc_contract_type_advance"/>
+							<field name="tnc_contract_type_delivery"/>
+							<field name="tnc_contract_type_progclaim"/>
+							<field name="tnc_contract_type_balance"/>
+						</group>
+						<group colspan="3">
+							<h2>Retention</h2><br/>
+							<field name="tnc_retention"/>
+							<field name="tnc_retention_oneach" attrs="{'invisible':[('tnc_retention', '!=', 'applicable')]}"/>
+							<field name="tnc_retention_uponcomplete" attrs="{'invisible':[('tnc_retention', '!=', 'applicable')]}"/>
+							<field name="tnc_retention_after" attrs="{'invisible':[('tnc_retention', '!=', 'applicable')]}"/>
+							<field name="tnc_retention_release" attrs="{'invisible':[('tnc_retention', '!=', 'applicable')]}"/>
+						</group>
+						<group colspan="3">
+							<h2>Defect Liability Period</h2><br/>
+							<field name="tnc_dlp"/>
+							<field name="tnc_dlp_fromcompletionprov" attrs="{'invisible':[('tnc_dlp', '!=', 'applicable')]}"/>
+						</group>
+						<group colspan="3">
+							<h2>Warranty</h2><br/>
+							<field name="tnc_warranty"/>
+							<field name="tnc_warranty_duration" attrs="{'invisible':[('tnc_warranty', '!=', 'applicable')]}"/>
+						</group>
+						<group colspan="3">
+							<h2>Delivery Time</h2><br/>
+							<field name="tnc_delivery_time"/>
+							<field name="tnc_delivery_time_after_po" attrs="{'invisible':[('tnc_delivery_time', '!=', 'after_po_conf')]}"/>
+							<field name="tnc_delivery_time_completion" attrs="{'invisible':[('tnc_delivery_time', '!=', 'completion_date')]}"/>
+							<field name="tnc_delivery_time_other"/>
+						</group>
+						<group colspan="3">
+							<h2>Penalties</h2><br/>
+							<field name="tnc_penalty"/>
+							<field name="tnc_penalty_percentage" attrs="{'invisible':[('tnc_penalty', '!=', 'applicable')]}"/>
+							<field name="tnc_penalty_maximum" attrs="{'invisible':[('tnc_penalty', '!=', 'applicable')]}"/>
+						</group>
+						<group colspan="3">
+							<h2>Other</h2><br/>
+							<field name="tnc_other"/>
+							<field name="tnc_insurance"/>
+						</group>
+					</page>
+				</xpath>
+			</field>
+		</record>	
+
+		<record id="dih_purchase_order_tree_analytic" model="ir.ui.view">
+			<field name="name">Purchase Order view - customized</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_tree"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='state']" position="after">
+					<field name="analytic_account" string="Analytic Account"/>
+				</xpath>
+			</field>
+		</record>	
+
+		<record id="dih_purchase_order_search_analytic" model="ir.ui.view">
+			<field name="name">Purchase Order view - customized</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='create_uid']" position="after">
+					<field name="analytic_account"/>
+					<field name="product_categories"/>
+					<field name="leaf_product_categories"/>
+				</xpath>
+			</field>
+		</record>			
+	</data>
+</openerp>

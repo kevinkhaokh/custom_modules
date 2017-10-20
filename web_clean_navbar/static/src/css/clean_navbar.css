@@ -1,0 +1,200 @@
+/*Top menu general*/
+.navbar-inverse .navbar-nav > li > a {
+	color:black; /* ?? green */
+	font-weight:bold;
+}
+
+.navbar-inverse{
+	background-color:#F4F5F8;
+	border-color:white;
+	border-bottom-color:#cacaca;
+}
+
+ul.navbar-left li > a:hover, ul.navbar-right li > a:hover {
+  background-color:#F4F5F8!important; /* ?? #F00 */
+  	-webkit-transition: color 0.1s, background-color 0.1s;
+  font-weight:bold;
+  color:#253D7E!important;
+	border-bottom: 2px solid #375ABE;
+
+}
+
+ul.navbar-left li.active {
+  background-color:#fff!important;
+}
+
+/*Top menu when active*/
+ul.navbar-left li.active > a, ul.navbar-right li.active > a {
+  
+  color:#253D7E!important;
+  background-color:#F4F5F8!important;
+  font-weight:bold;
+   /*background: -moz-linear-gradient(top, rgba(55,90,190,1) 0%, rgba(55, 90, 190,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(55,90,190,1)), color-stop(100%, rgba(55, 90, 190,1)));
+    /* background: -webkit-linear-gradient(top, rgba(55,90,190,1) 0%, rgba(55, 90, 190,1) 100%); 
+    background: -o-linear-gradient(top, rgba(55,90,190,1) 0%, rgba(55, 90, 190,1) 100%);
+    background: -ms-linear-gradient(top, rgba(55,90,190,1) 0%, rgba(55, 90, 190,1) 100%);
+    /* background: linear-gradient(to bottom, rgba(55,90,190,1) 0%, rgba(55, 90, 190,1) 100%); */
+    background:unset;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#777777', endColorstr='#444444', GradientType=0 );
+  	-webkit-transition: color 0.1s;
+  	-webkit-transition: background 0.1s;
+  	-webkit-transition: background-color 0.1s, border-bottom 0.2s;
+	border-bottom: 2px solid #375ABE;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:hover {
+  	color:#375ABE!important;
+  	-webkit-transition: color 0.2s, background-color 0.2s;
+}
+
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+  	color:#375ABE;
+}
+
+#oe_main_menu_navbar{
+	min-height:28px!important;
+}
+
+.openerp .nav-pills > li.active > a, .openerp a.list-group-item.active > a {
+	background-color:#F4F5F8;
+	border-left: 6px solid #375ABE;
+	font-weight:bold;
+	color:#375ABE!important;
+}
+
+/*item on left menubar, active, hover*/
+.openerp .nav-pills > li.active a:hover{
+	background-color:#D0D9F1!important;
+	border-left: 6px solid #375ABE;
+}
+
+.openerp .oe_secondary_menu_section{
+	color:#375ABE;
+}
+
+.openerp .oe_leftbar{
+	background-color:#F4F5F8;
+}
+#oe_main_menu_navbar li a, #oe_main_menu_navbar li button{
+	margin-top:0px;
+}
+
+.oe_secondary_submenu > li:hover{
+	border-left: 6px solid #375ABE;
+	-webkit-transition: border-left 0.1s, background-color 0.1s;
+	background-color:#D0D9F1;
+}
+
+
+.oe_secondary_submenu > li.active a:hover{
+	border-left: 6px solid #375ABE;
+	-webkit-transition: border-left 0.1s;
+	background-color:#D0D9F1;
+}
+
+.openerp .oe_view_manager_current > .oe_view_manager_header{
+	background-image: unset;
+	background-color: #fff!important;
+}
+
+/*Red buttons emphasized in form views*/
+.openerp button.oe_highlight{
+	background-image: unset;
+	background-color: #375ABE;
+	box-shadow: 2px 2px 2px grey;
+}
+
+.openerp button.oe_highlight:hover{
+	background-image: unset;
+	background-color: #375ABE;
+	box-shadow: 3px 3px 3px grey;
+}
+
+.openerp button.oe_highlight:focus{
+	border:unset;
+}
+
+/*Regular buttons like in form view*/
+.openerp .oe_button, .openerp button{
+	background-image: unset;
+	background-color: #fff;
+	box-shadow: 2px 2px 2px grey;
+}
+
+.openerp button:hover, .openerp .oe_button:hover{
+	background-image:unset;
+	box-shadow: 3px 3px 3px grey;
+}
+
+.openerp button:focus, .openerp .oe_button:focus{
+	border:unset;
+}
+
+.openerp .oe_form header{
+	background-image:unset;
+	background-color:#F4F5F8;
+}
+
+.openerp .oe_application a{
+	color:#253D7E;
+}
+
+.openerp .oe_horizontal_separator{
+	color:#253D7E;
+
+}
+.openerp ul.oe_form_status_clickable li > .label{
+	color:#253D7E;
+
+}
+
+/*categories when group by is used*/
+.openerp .oe_list .oe_list_content .oe_group_header{
+	background-image:unset;
+	background-color:#ebebeb;
+}
+
+/*Odd lines in list view*/
+.openerp .oe_list_content > tbody > tr:nth-child(odd){
+	background-image:unset;
+	background-color:#D0D9F1;
+}
+
+.openerp .oe_view_manager_current > .oe_view_manager_header{
+	background-color:#F4F5F8!important;
+}
+
+.openerp .oe_tag_dark{
+	background:#375ABE;
+}
+
+.openerp .oe_view_manager table.oe_view_manager_header h2 a{
+	color:#375ABE;
+}
+
+.openerp .badge{
+	background-color:#375ABE;
+}
+
+.openerp .oe_stat_button .stat_button_icon{
+	color:#375ABE;
+}
+
+.openerp .oe_stat_button:hover{
+	background:#375ABE;
+}
+
+.openerp .oe_view_manager_current .oe_form_editable button.oe_highlight {
+	background-image:unset;
+	background-color: #fff!important;
+	box-shadow: 2px 2px 2px grey!important;
+	color:#4c4c4c!important;
+}
+.openerp .oe_view_manager_current .oe_form_editable button.oe_highlight:hover {
+	background-image:unset;
+	background-color: #fff!important;
+	box-shadow: 3px 3px 3px grey!important;
+	color:#4c4c4c!important;
+}

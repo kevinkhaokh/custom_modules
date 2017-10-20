@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding ="utf-8"?>
+<openerp>
+	<data>
+
+         <record id="hr.action_hr_departures" model="ir.actions.act_window">
+            <field name="name">Departures</field>
+            <field name="res_model">hr.dih.movement</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('nature_of_move', '=', 'departure')]</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                  Click to create an employee movement. It can be a departure or a hire.
+                </p>
+            </field>
+        </record>
+
+         <record id="hr.action_hr_hires" model="ir.actions.act_window">
+            <field name="name">Hires</field>
+            <field name="res_model">hr.dih.movement</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('nature_of_move', '=', 'hire')]</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                  Click to create an employee movement. It can be a departure or a hire.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="hr.menu_hr_movement" parent="hr.menu_hr_main" name="Hires and departures" sequence="30"/>
+
+		<menuitem name="Check-outs"
+        id="hr.menu_hr_departures"
+        parent="hr.menu_hr_movement"
+        sequence="31"
+        action="hr.action_hr_departures"/>
+
+		<menuitem name="Check-ins"
+        id="hr.menu_hr_hires"
+        parent="hr.menu_hr_movement"
+        sequence="32"
+        action="hr.action_hr_hires"/>
+
+        <record id="dih_movements_tree" model="ir.ui.view">   
+        	<field name="name">Movements</field>
+            <field name="model">hr.dih.movement</field>
+            <field name="arch" type="xml">
+                <tree string="Movements">
+                	<field name="emp_id"/>
+                	<field name="date"/>
+                	<field name="nationality"/>
+                	<field name="job_title"/>
+                	<field name="location"/>
+                	<field name="nature_of_move"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="dih_movements_form" model="ir.ui.view">   
+        	<field name="name">Movements</field>
+            <field name="model">hr.dih.movement</field>
+            <field name="arch" type="xml">
+                <form string="Movements">
+                	<sheet><group>
+	                	<group style="width:50%;">
+		                			<field name="emp_id"/>
+		                			<field name="nature_of_move"/>
+		                			<field name="date"/>
+	               	 	</group>
+	               	 	<group>
+		                	<field name="nationality"/>
+		                	<field name="job_title"/>
+		                	<field name="location"/>
+		                </group>
+		                	<field name="comments"/></group>
+		                <group string="Procedures" attrs="{'invisible':[('nature_of_move', '!=', 'departure')]}">
+		                		<group string="HR">
+		                			<field name="depart_hr_loans"/>
+		                			<field name="depart_hr_ins_cancelled"/>
+		                			<field name="depart_hr_leaves_cleared"/>
+		                			<field name="depart_hr_comments"/>
+		                			<field name="depart_hr"/>
+		                		</group>
+		                		<group string="IT">
+		                			<field name="depart_it_assets_recovered"/>
+		                			<field name="depart_it_access_revoked"/>
+		                			<field name="depart_it"/>
+		                		</group>
+		                		<group string="Finance">
+		                			<field name="depart_finance"/>
+		                		</group>
+		                	</group>
+
+		               		<group string="Procedures" attrs="{'invisible':[('nature_of_move', '!=', 'hire')]}">
+		                		<group string="HR">
+		                			<field name="arrive_hr_ins_done"/>
+		                			<field name="arrive_hr"/>
+		                		</group>
+		                		<group string="Finance">
+		                			<field name="arrive_finance"/>
+		                		</group>
+		                		<group string="IT">
+		                			<field name="arrive_it_evaluate_reqs"/>
+		                			<field name="arrive_it_notes_reqs"/>
+		                			<field name="arrive_it_assign_assets"/>
+		                			<field name="arrive_it_access_created"/>
+		                			<field name="arrive_it_prepared"/>
+		                			<field name="arrive_it"/>
+		                		</group>
+		                </group><group string="Completion">
+		                			
+		                	<field name="completed_depart" attrs="{'invisible':[('nature_of_move', '!=', 'departure')]}"/>
+		                	<field name="completed_arrive" attrs="{'invisible':[('nature_of_move', '!=', 'hire')]}"/></group>
+
+	             <div class="oe_chatter">
+            		<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            		<field name="message_ids" widget="mail_thread"/>
+        		</div>
+	            </sheet>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

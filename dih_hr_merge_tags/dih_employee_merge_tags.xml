@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+		
+        <record id="dih_hr_wizard_mergetags" model="ir.ui.view">
+            <field name="name">Wizard for tag merging</field>
+            <field name="model">hr.employee.category.merge.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Confirm merge selected">
+                    <p>
+                        Enter the name that will be kept for the merged tags
+                    </p>
+                    <field name="new_name"/>
+                    <footer>
+                        <button string="Confirm Merge" name="merge_tags" type="object" default_focus="1" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_hr_merge_tags"
+            multi="True"
+            key2="client_action_multi" name="Merge Selected Tags"
+            res_model="hr.employee.category.merge.wizard" src_model="hr.employee.category"
+            view_mode="form" target="new" view_type="form" />
+			
+	</data>
+</openerp>

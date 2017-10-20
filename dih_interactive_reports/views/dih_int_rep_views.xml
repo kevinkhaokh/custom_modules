@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+            <!--       XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX         -->
+
+
+
+        <record model="ir.ui.view" id="view_dih_balance_sheet">
+            <field name="name">balance sheet demo</field>
+            <field name="model">account.account</field>
+            <field name="arch" type="xml">
+                <balancesheet>
+                    <templates>
+                        <t t-name="dummy-content">
+                            <div class="col-md-12">
+                                <h2>Lorem ipsum</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id lorem fringilla, aliquet orci ac, hendrerit ex. Nullam purus turpis, aliquet nec facilisis at, vehicula non lorem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas tincidunt ex metus, ultricies ullamcorper velit molestie eget. In hac habitasse platea dictumst. Aenean rutrum rhoncus turpis sit amet tincidunt. Mauris commodo justo quis quam ultricies, nec blandit nulla interdum. Sed vulputate lacus erat, in auctor ipsum malesuada at. In vehicula velit enim, quis sollicitudin nunc facilisis non. Praesent a metus hendrerit, rutrum turpis sed, commodo justo. Nulla suscipit risus vel felis consectetur consectetur. Morbi mi nunc, tempor sit amet quam id, posuere molestie metus.</p>
+                                <p>In accumsan blandit libero. Aliquam pharetra convallis enim, quis pretium lacus scelerisque ut. Nunc et velit nec ligula pretium molestie. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam in leo eget ante egestas condimentum. Donec lobortis, est non commodo consequat, arcu purus posuere erat, id faucibus sapien arcu quis lectus. Quisque commodo ut arcu ultrices posuere. Phasellus interdum justo non tellus egestas sodales. Mauris bibendum sapien a sem maximus rhoncus. Nulla molestie urna sem, sit amet feugiat est sodales ut. Aliquam eu efficitur sapien. Duis libero libero, elementum et sem lacinia, rhoncus elementum erat. Maecenas euismod tortor et fermentum condimentum. Quisque non efficitur justo. </p>
+                            </div>
+                        </t>
+                    </templates>
+                </balancesheet>
+            </field>
+        </record>
+        <record id="action_int_balance_sheet" model="ir.actions.act_window">
+            <field name="name">Balance Sheet</field>
+            <field name="res_model">account.account</field>
+            <field name="view_mode">balancesheet</field>
+            <field name="view_id" ref="view_dih_balance_sheet"></field>
+            <field name="target">current</field>
+        </record>
+
+        <menuitem id="menu_base_interactive_reports"
+            parent="account.menu_finance"
+            name="Interactive Reports"
+            sequence="6" />
+
+        <menuitem id="menu_balance_sheet_interactive" name="Balance Sheet"
+            parent="menu_base_interactive_reports"
+            action="action_int_balance_sheet" sequence="100"/>
+<!--
+        <menuitem id="menu_balance_sheet_interactive" name="Balance Sheet"
+            parent="menu_base_interactive_reports"
+            action="action_int_pnl" sequence="200"/>
+-->
+    </data>
+</openerp>

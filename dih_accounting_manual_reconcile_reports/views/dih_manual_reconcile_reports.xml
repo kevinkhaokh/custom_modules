@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="action_reconcile_eomb" model="ir.actions.act_window">
+            <field name="name">End of month balances</field>
+            <field name="res_model">dih.accounting.manual.reconcile.reports.reconcile.eomb</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+         <!--   <field name="view_id" ref="view_account_chart"/>-->
+            <field name="target">current</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_move_tree_manual_reconcile_report">
+            <field name="name">account.move.tree.manual.reconcile.report</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';black:state == 'posted'" string="Journal Entries" create="false" edit="false">
+                    <field name="name"/>
+                    <field name="ref"/>
+                    <field name="date"/>
+                    <field name="period_id"/>
+                    <field name="journal_id"/>
+                    <field name="partner_id"/>
+                    <field name="state"/>
+                    <field name="dummy_credit" string="Credit"/>
+                    <field name="dummy_debit" string="Debit"/>
+                    <field name="dummy_rec" sum="Reconciled" string="Amount reconciled"/>
+                    <field name="is_manual_reconciled_virtual" string="Reconciled"/>
+                    <field name="is_manual_reconciled_permanent" string="Confirmed reconciled"/>
+                    <button name="dih_manual_reconcile" type="object" string="Switch" attrs="{'invisible':[('is_manual_reconciled_permanent','=',True)]}"/>
+                    <button name="action_open_edit_view" type="object" string="Edit" attrs="{'invisible':[('is_manual_reconciled_permanent','=',True)]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_move_search_manual_reconcile_report">
+            <field name="name">account.move.search.manual.reconcile.report</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <search>
+                     <group string="Group By">
+                        <filter string="By Period" name="group_period" context="{'group_by' : 'period_id'}"/>
+                        <filter string="By Partner" name="group_partner" context="{'group_by' : 'partner_id'}"/>
+                    </group>
+                     <group string="Filter By">
+                        <filter string="Not yet reconciled" name="filter_not_reconciled_permanently" domain="[('is_manual_reconciled_permanent', '=', False)]"/>
+                    </group>
+                    <field name="name"/>
+                    <field name="ref"/>
+                    <field name="dummy_credit" />
+                    <field name="dummy_debit" />
+                    <field name="partner_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="dih_view_reconcile_eomb_tree" model="ir.ui.view">
+            <field name="name">dih.view.reconcile.eomb.tree</field>
+            <field name="model">dih.accounting.manual.reconcile.reports.reconcile.eomb</field>
+            <field name="arch" type="xml">
+                <tree string="End of month balances">
+                    <field name="journal" style="width:180px"/>
+                    <field name="date_month" style="width:180px"/>
+                    <field name="date_year" style="width:180px"/>
+                    <field name="balance" style="width:180px"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="dih_view_reconcile_eomb_form" model="ir.ui.view">
+            <field name="name">dih.view.reconcile.eomb.form</field>
+            <field name="model">dih.accounting.manual.reconcile.reports.reconcile.eomb</field>
+            <field name="arch" type="xml">
+                <form string="End of month balances">
+                    <group>
+                    <field name="journal" style="width:180px"/>
+                    <field name="date_month" style="width:180px"/>
+                    <field name="date_year" style="width:180px"/>
+                    <field name="balance" style="width:180px"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="dih_view_reconcile_wizard" model="ir.ui.view">
+            <field name="name">dih.view.reconcile.wizard</field>
+            <field name="model">dih.reconcile.wizard</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                        <button name="dih_action_get_view" type="object" string="Reconcile" class="oe_highlight"/>
+                    </header>
+                    <group>
+                        <field name="select_month" style="width:180px"/>
+                        <field name="select_year" style="width:180px"/>
+                        <field name="select_journal" domain="[('type', '=', 'bank')]" style="width:180px"/>
+                        <field name="display_previous_eom" style="width:180px"/>
+                        <field name="select_current_eom" style="width:180px"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_form_confirm_reconciles_wizard" model="ir.ui.view">
+            <field name="name">dih.view.reconcile.confirm.wizard</field>
+            <field name="model">dih.confirm.reconciles.temp.screen.wizard</field>
+            <field name="arch" type="xml">
+                <form create="false" edit="false" write="false" save="false">
+                    <group>
+                        <h1 style="color:red">Warning, the reconciliation will be permanent. The entries will be permanently reconciled. Continue ?</h1>
+                    </group>
+                    <footer>
+                        <button name="confirm_reconciles" string="Yes" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_form_temp_reconciles_wizard" model="ir.ui.view">
+            <field name="name">dih.view.reconcile.temp.wizard</field>
+            <field name="model">dih.temp.reconcile.report.temp.screen.wizard</field>
+            <field name="arch" type="xml">
+                <form create="false" edit="false" write="false" save="false">
+                    <group>
+                        <h1>This will not reconcile anything and only print an intermediary report. Continue ?</h1>
+                    </group>
+                    <footer>
+                        <button name="temp_report_reconciles" string="Yes" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_move_form" model="ir.ui.view">
+            <field name="name">account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="period_id" position="after">
+                    <field name="dih_date_reconciled"/>
+                </field>
+            </field>
+        </record>
+        
+        <menuitem action="action_reconcile_eomb"
+            id="menu_action_reconcile_eomb"
+            parent="account.menu_finance_charts"
+            name="End of month balances" />
+<!--
+        <act_window id="action_reconcile_wizard"
+            multi="True"
+            key2="client_action_multi" name="Reconcile Wizard"
+            res_model="dih.reconcile.wizard" src_model="account.move"
+            view_mode="form" target="new" view_type="form" />
+-->
+        <act_window id="action_reconcile_wizard"
+        name="Reconciliation Form"
+        res_model="dih.reconcile.wizard"
+        view_mode="form"
+        target="current" multi="True"
+        view_id="dih_view_reconcile_wizard"
+        />
+
+        <menuitem action="action_reconcile_wizard"
+            id="menu_action_reconcile_wizard"
+            parent="account.menu_finance_charts"
+            name="Manual Reconcile LBL"/>
+
+    </data>
+</openerp>

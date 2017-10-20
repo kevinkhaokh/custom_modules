@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+<t t-name="AddUrlDocumentItem">
+     <li class="oe_sidebar_add_url"><span><b>Add External Link...</b></span></li>
+</t>
+<t t-name="ListAllUrlDocumentItem">
+     <li class="oe_sidebar_list_attachments"><span><b>List all attachments...</b></span></li>
+</t>
+</templates>

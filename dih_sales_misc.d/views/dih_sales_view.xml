@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+		<record id="view_account_invoice_customized_form" model="ir.ui.view">
+			<field name="name">Invoice form view - customized</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//header/button[@name='invoice_pay_customer']" position="replace">
+					<button name="invoice_pay_customer" type="object" string="Pay" states="to_pay" class="oe_highlight" groups="base.group_user"/>
+				</xpath>
+				<xpath expr="//header/field[@name='state']" position="replace">
+				    <field name="state" widget="statusbar" statusbar_visible="draft,open,to_pay,paid" statusbar_colors='{"proforma":"blue","proforma2":"blue"}'/>
+				</xpath>
+				<xpath expr="//header" position="inside">
+					<button name="invoice_dih_open_to_to_pay" string="To Pay" states="open" class="oe_highlight" groups="base.group_user"/>
+				</xpath>
+			</field>
+		</record>
+		
+		
+		
+
+        <record id="account_invoice_set_to_pay_view" model="ir.ui.view">
+            <field name="name">account.invoice.set.to.pay.form</field>
+            <field name="model">account.invoice.set.to.pay.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Confirm Set To Pay">
+                    <p class="oe_grey">
+                        Only confirmed invoices "Open" are set to to pay.
+                    </p>
+                    <footer>
+                        <button string="Confirm Set to Pay" name="invoice_set_to_pay" type="object" default_focus="1" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_account_invoice_batch_to_pay"
+            multi="True"
+            key2="client_action_multi" name="Set to To Pay"
+            res_model="account.invoice.set.to.pay.wizard" src_model="account.invoice"
+            view_mode="form" target="new" view_type="form" />
+			
+	</data>
+</openerp>

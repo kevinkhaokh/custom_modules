@@ -1,0 +1,35 @@
+<openerp>
+    <data>
+        <record id="vlim_view_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="parent_id" position="before">
+                    <div class="oe_edit_only">
+                        <label for="name_kh"/>
+                    </div>
+                    <h1>
+                        <field name="name_kh" placeholder="Name in Khmer"/>
+                    </h1>
+                </field>
+
+                <field name="country_id" position="after">
+                    <field name="address_kh" placeholder="Address in Khmer"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="vlim_view_partner_property_form" model="ir.ui.view">
+            <field name="name">res.partner.property.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <field name="property_account_position" position="before">
+                    <field name="payable_name"/>
+                    <field name="vat"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
